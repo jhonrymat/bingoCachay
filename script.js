@@ -1,185 +1,163 @@
-// Identify HTML element
-const start = document.querySelector("#start");
-const next = document.querySelector("#next");
-const currentNumber = document.querySelector("#current-number");
+var numberArray = new Array();
+var pickedNumberArray = new Array();
+var lock = false;
 const pastNumbersList = document.querySelector("#past-numbers");
-const finishedMessage = document.querySelector("#finished-message");
-
-const configureLocalStorage = () => {
-    // If currentNumber doesn't already exist in local storage
-    if (!localStorage.getItem("currentNumber")) {
-        localStorage.setItem("currentNumber", JSON.stringify([]));
+function init() {
+    initNumberArray();
+    createNumbers();
+    // First try to load from local storage
+    if (localStorage.getItem("numberArray") != null) {
+        restoreVariables();
+        glowNumbers();
     }
 
-    if (!localStorage.getItem("pastNumbersArr")) {
-        localStorage.setItem("pastNumbersArr", JSON.stringify([]));
+}
+
+function storeVariables() {
+    localStorage.setItem("numberArray", JSON.stringify(numberArray));
+    localStorage.setItem("pickedNumberArray", JSON.stringify(pickedNumberArray));
+}
+
+function restoreVariables() {
+    numberArray = JSON.parse(localStorage.getItem("numberArray"));
+    pickedNumberArray = JSON.parse(localStorage.getItem("pickedNumberArray"));
+}
+
+
+function createNumbers() {
+
+    var numbersTableDiv = document.getElementById("numbersTableDiv");
+    var tableHTML = "<table id=\"numbersTable\">";
+    var cellIndex = 1;
+    for (var i = 0; i < 5; i++) {
+        tableHTML = tableHTML + "<tr>";
+        for (var j = 0; j < 15; j++) {
+            tableHTML = tableHTML + "<td id=\"cell" + cellIndex + "\">" + cellIndex + "</td>";
+            cellIndex = cellIndex + 1;
+        }
+        tableHTML = tableHTML + "</tr>";
+    }
+    tableHTML = tableHTML + "</table>";
+
+    numbersTableDiv.innerHTML = tableHTML;
+}
+
+
+function initNumberArray() {
+    for (var i = 0; i < 75; i++) {
+        numberArray[i] = i + 1;
     }
 }
 
-const bingoNumbersMaster = [];
 
-const generateBingoNumbers = () => {
-    // Populate B1-15 in array
-    for (let i = 1; i < 16; i++) {
-        bingoNumbersMaster.push(`B${i}`);
+function pickARandomNumber() {
+    if (!lock) {
+        lock = true;
+        // Initial setup
+        randomNumber = $('#randomNumber');
+        var randomIndex;
+        // Animate
+        animationTimer = setInterval(function () {
+            randomIndex = Math.floor(Math.random() * numberArray.length);
+
+            if (numberArray.length == 0) {
+                randomNumber.html('THE&nbsp;END');
+
+            } else {
+                randomNumber.text('' + numberArray[randomIndex]);
+                console.log("numberArray[randomIndex] " + numberArray[randomIndex]);
+
+
+
+
+
+            }
+
+        }, 20);
+
+        // Set timeout to stop random counter
+        setTimeout(function () {
+            speakLetterWithNumber(numberArray[randomIndex]);
+
+            console.log("numberArray[randomIndex22] " + numberArray[randomIndex]);
+            clearInterval(animationTimer)
+            updateArrays(randomIndex);
+            lock = false;
+        }, 3000);
     }
 
-    // Populate I16-30 in array 
-    for (let i = 16; i < 31; i++) {
-        bingoNumbersMaster.push(`I${i}`);
-    }
-
-    // Populate N31-N45 in array 
-    for (let i = 31; i < 46; i++) {
-        bingoNumbersMaster.push(`N${i}`);
-    }
-
-    // Populate G46-60 in array 
-    for (let i = 46; i < 61; i++) {
-        bingoNumbersMaster.push(`G${i}`);
-    }
-
-    // Populate O61-75 in array 
-    for (let i = 61; i < 76; i++) {
-        bingoNumbersMaster.push(`O${i}`);
-    }
-};
-
-const liArrayLoop = array => {
-    array.forEach(item => {
-        const newBullet = document.createElement("li");
-
-        newBullet.innerText = item;
-
-        pastNumbersList.appendChild(newBullet);
-    })
 }
 
-const checkFinished = () => {
-    const pastNumbersArr = JSON.parse(localStorage.getItem("pastNumbersArr"));
 
-    // Stops generator once all numbers have been called
-    if (pastNumbersArr.length === 74) {
-        start.innerText = "Restart";
+function speakLetterWithNumber(number) {
+    var letter = "";
 
-        finishedMessage.classList.remove("hide");
+    if (number >= 1 && number <= 15) {
+        letter = "B";
+    } else if (number >= 16 && number <= 30) {
+        letter = "i";
+    } else if (number >= 31 && number <= 45) {
+        letter = "n";
+    } else if (number >= 46 && number <= 60) {
+        letter = "G";
+    } else if (number >= 61 && number <= 75) {
+        letter = "O";
+    }
 
-        next.classList.add("hide");
+    if (letter !== "") {
+        var speechText = letter + (number);
+        var utterance = new SpeechSynthesisUtterance(speechText);
+        utterance.lang = 'es-ES'; // Establece el idioma a español de España (cambiar según necesites)
+        utterance.voiceURI = 'Google español';
+        utterance.volume = 1;
+        utterance.rate = 1;
+        utterance.pitch = 1;
 
-        currentNumber.innerText = JSON.parse(localStorage.getItem("currentNumber"));
+        // Reproduce el texto dos veces
+        var repeatCount = 0;
+        utterance.addEventListener('end', function () {
+            repeatCount++;
+            if (repeatCount < 2) {
+                speechSynthesis.speak(utterance);
+            }
+        });
 
-        return true;
+        // Reproduce el texto
+        speechSynthesis.speak(utterance);
     }
 }
 
-const inProgress = () => {
-    const currentNumberValue = JSON.parse(localStorage.getItem("currentNumber"));
 
-    if (currentNumberValue.length !== 0) {
-        start.innerText = "Restart";
-    
-        next.classList.remove("hide");
 
-        currentNumber.innerText = currentNumberValue;
 
-        const pastNumbersArr = JSON.parse(localStorage.getItem("pastNumbersArr"));
-
-        pastNumbersList.innerHTML = "";
-
-        liArrayLoop(pastNumbersArr);
+function glowNumbers() {
+    for (var i = 0; i < pickedNumberArray.length; i++) {
+        var cell = document.getElementById("cell" + pickedNumberArray[i]);
+        cell.className = cell.className + " glowingText";
     }
-
-    checkFinished();
 }
 
-// Declare generator function
-const storePreviousNumber = () => {
-    const pastNumbersArr = JSON.parse(localStorage.getItem("pastNumbersArr"));
-
-    // Store past number in front of list so bullet points display newest number FIRST
-    pastNumbersArr.unshift(currentNumber.innerText);
-
-    pastNumbersList.innerHTML = "";
-
-    // Loop through array to create bullet points
-    liArrayLoop(pastNumbersArr);
-
-    localStorage.setItem("pastNumbersArr", JSON.stringify(pastNumbersArr));
+function updateArrays(pickedIndex) {
+    pickedNumberArray.push(numberArray[pickedIndex]); // Copy the picked number to a seperate array
+    numberArray.splice(pickedIndex, 1); // removeNumberFromNumberArray
+    storeVariables();
+    glowNumbers();
 }
 
-const selectBingoNumber = () => {
-    if (checkFinished()) {
-        // Stops execution to avoid displaying Next button
-        return;
+$(document).keydown(function (event) {
+    if (event.keyCode == 13) {
+        event.preventDefault();
+        pickARandomNumber();
+    } else if (event.keyCode == 27) {
+        event.preventDefault();
+        askForRestart();
     }
+});
 
-    // Stores previous number in localStorage before it's overwritten
-    if (currentNumber.innerText) {
-        storePreviousNumber();
+function askForRestart() {
+    if (confirm('Do you want to really restart the game?')) {
+        localStorage.clear();
+        location.reload();
     }
-
-    const bingoNumbers = JSON.parse(localStorage.getItem("bingoNumbers"));
-
-    // Maximum range of random numbers is 0-74 to align with indexes of bingoNumbers
-    const randomIndex = Math.floor(Math.random() * bingoNumbers.length);
-
-    // Removes 1 number, starting at randomIndex and returns result to display
-    const output = bingoNumbers.splice(randomIndex, 1);
-
-    currentNumber.innerText = output;
-
-    localStorage.setItem("currentNumber", JSON.stringify(output));
-
-    localStorage.setItem("bingoNumbers", JSON.stringify(bingoNumbers));
 }
 
-// Declare start + variable capture function
-const startGenerating = () => {
-    // Each time sequence is restarted, bingoNumbers array is overwritten with master values and persisted in localStorage
-    localStorage.setItem("bingoNumbers", JSON.stringify([...bingoNumbersMaster]));
-
-    // Clearing any previous numbers and exposing buttons
-    if (currentNumber.innerText) {
-        // Clears any existing values from previous calls
-        currentNumber.innerText = "";
-    }
-
-    if (pastNumbersList.innerHTML) {
-        // Clear bullet points for new numbers
-        pastNumbersList.innerHTML = "";
-    }
-
-    if (start.innerText === "Start") {
-        start.innerText = "Restart";
-    }
-
-    if (next.classList.contains("hide")) {
-        next.classList.remove("hide");
-    }
-
-    finishedMessage.classList.add("hide");
-
-    // Creates new empty past numbers array
-    const pastNumbersArr = [];
-        
-    // Adds empty array to localStorage
-    localStorage.setItem("pastNumbersArr", JSON.stringify(pastNumbersArr));
-
-    // Call generator
-    selectBingoNumber();
-}
-
-start.addEventListener("click", startGenerating);
-next.addEventListener("click", selectBingoNumber);
-
-configureLocalStorage();
-generateBingoNumbers();
-inProgress();
-
-// Automated testing suite
-// startGenerating();
-
-// for (let i = 0; i < 76; i++) {
-//     selectBingoNumber();
-//     console.log(i);
-// }

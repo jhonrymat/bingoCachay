@@ -4,120 +4,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>BINGO</title>
     <link rel="stylesheet" href="style.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    <script type="text/javascript">
-        var numberArray = new Array();
-        var pickedNumberArray = new Array();
-        var lock = false;
-        const pastNumbersList = document.querySelector("#past-numbers");
-        function init() {
-            initNumberArray();
-            createNumbers();
-            // First try to load from local storage
-            if (localStorage.getItem("numberArray") != null) {
-                restoreVariables();
-                glowNumbers();
-            }
-
-        }
-
-        function storeVariables() {
-            localStorage.setItem("numberArray", JSON.stringify(numberArray));
-            localStorage.setItem("pickedNumberArray", JSON.stringify(pickedNumberArray));
-        }
-
-        function restoreVariables() {
-            numberArray = JSON.parse(localStorage.getItem("numberArray"));
-            pickedNumberArray = JSON.parse(localStorage.getItem("pickedNumberArray"));
-        }
-
-
-        function createNumbers() {
-
-            var numbersTableDiv = document.getElementById("numbersTableDiv");
-            var tableHTML = "<table id=\"numbersTable\">";
-            var cellIndex = 1;
-            for (var i = 0; i < 5; i++) {
-                tableHTML = tableHTML + "<tr>";
-                for (var j = 0; j < 15; j++) {
-                    tableHTML = tableHTML + "<td id=\"cell" + cellIndex + "\">" + cellIndex + "</td>";
-                    cellIndex = cellIndex + 1;
-                }
-                tableHTML = tableHTML + "</tr>";
-            }
-            tableHTML = tableHTML + "</table>";
-
-            numbersTableDiv.innerHTML = tableHTML;
-        }
-
-        function initNumberArray() {
-            for (var i = 0; i < 75; i++) {
-                numberArray[i] = i + 1;
-            }
-        }
-
-
-        function pickARandomNumber() {
-            if (!lock) {
-                lock = true;
-                // Initial setup
-                randomNumber = $('#randomNumber');
-                var randomIndex;
-                // Animate
-                animationTimer = setInterval(function () {
-                    randomIndex = Math.floor(Math.random() * numberArray.length);
-
-                    if (numberArray.length == 0) {
-                        randomNumber.html('THE&nbsp;END');
-
-                    } else {
-                        randomNumber.text('' + numberArray[randomIndex]);
-
-                    }
-                }, 20);
-                // Set timeout to stop random counter
-                setTimeout(function () {
-                    clearInterval(animationTimer)
-                    updateArrays(randomIndex);
-                    lock = false;
-                }, 3000);
-            }
-
-        }
-
-        function glowNumbers() {
-            for (var i = 0; i < pickedNumberArray.length; i++) {
-                var cell = document.getElementById("cell" + pickedNumberArray[i]);
-                cell.className = cell.className + " glowingText";
-            }
-        }
-
-        function updateArrays(pickedIndex) {
-            pickedNumberArray.push(numberArray[pickedIndex]); // Copy the picked number to a seperate array
-            numberArray.splice(pickedIndex, 1); // removeNumberFromNumberArray
-            storeVariables();
-            glowNumbers();
-        }
-
-        $(document).keydown(function (event) {
-            if (event.keyCode == 13) {
-                event.preventDefault();
-                pickARandomNumber();
-            } else if (event.keyCode == 27) {
-                event.preventDefault();
-                askForRestart();
-            }
-        });
-
-        function askForRestart() {
-            if (confirm('Do you want to really restart the game?')) {
-                localStorage.clear();
-                location.reload();
-            }
-        }
-
-
-    </script>
+    <script src="script.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>    
 </head>
 
 <body onload="init()">
@@ -149,12 +37,31 @@
                 </td>
             </tr>
         </table>
+<div align="center">
+    <div id="bin">
+        <table id="bingo">
+            <tr>
+              <td>B</td>
+            </tr>
+            <tr>
+              <td>I</td>
+            </tr>
+            <tr>
+              <td>N</td>
+            </tr>
+            <tr>
+              <td>G</td>
+            </tr>
+            <tr>
+              <td>O</td>
+            </tr>
+          </table>
+    </div>
 
-        <p><br /><br /></p>
-
-        <div id="numbersTableDiv"></div>
-        <br>
-        <br>
+    <div id="numbersTableDiv"></div>
+    <br>
+</div>
+        
     </div>
 
 </body>

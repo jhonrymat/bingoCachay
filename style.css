@@ -6,8 +6,9 @@ body {
 }
 
 #background {
+  padding: 10px;
+  width: 98%;
   height: 100%;
-  padding: 15px;
   background: #333333;
   /* Old browsers */
   background: -moz-linear-gradient(top, #333333 0%, #000000 100%);
@@ -120,20 +121,32 @@ body {
 
 #numbersTable {
   font: bold 40px Helvetica, sans-serif;
-  width: 100%;
+  width: 93.7%;
   color: #FFFFFF;
   /* Fallback for older browsers */
   color: rgba(255, 255, 255, 0.2);
+  float: left;
 
+}
+#bingo {
+  font: bold 40px Helvetica, sans-serif;
+  width: 3%;
+  color: #FFFFFF;
+  /* Fallback for older browsers */
+  color: rgba(255, 255, 255, 0.2);
+  float: left;
 
 }
 
+
 #numbersTable td,
+#bingo td,
 table {
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-spacing: 0;
   padding: 0;
 }
+
 
 #buttonTable {
   width: 100%;
