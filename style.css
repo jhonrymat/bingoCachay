@@ -123,6 +123,7 @@ body {
   font: bold 40px Helvetica, sans-serif;
   width: 93.7%;
   color: #FFFFFF;
+  text-align: center;
   /* Fallback for older browsers */
   color: rgba(255, 255, 255, 0.2);
   float: left;
@@ -135,6 +136,7 @@ body {
   /* Fallback for older browsers */
   color: rgba(255, 255, 255, 0.2);
   float: left;
+  text-align:center;
 
 }
 
@@ -177,6 +179,6 @@ table {
 
 .glowingText {
   text-shadow: 0 0 10px #FF9D00;
-  font-size: 50px;
+  font-size: 40px;
   color: #FF9D00;
 }

@@ -1,6 +1,9 @@
 var numberArray = new Array();
 var pickedNumberArray = new Array();
 var lock = false;
+
+ // Obtener el botón de cerrar sesión
+ var logoutButton = document.getElementById("logoutButton");
 const pastNumbersList = document.querySelector("#past-numbers");
 function init() {
     initNumberArray();
@@ -144,15 +147,6 @@ function updateArrays(pickedIndex) {
     glowNumbers();
 }
 
-$(document).keydown(function (event) {
-    if (event.keyCode == 13) {
-        event.preventDefault();
-        pickARandomNumber();
-    } else if (event.keyCode == 27) {
-        event.preventDefault();
-        askForRestart();
-    }
-});
 
 function askForRestart() {
     if (confirm('Do you want to really restart the game?')) {
@@ -160,4 +154,19 @@ function askForRestart() {
         location.reload();
     }
 }
+
+// Función para cerrar sesión
+function logout() {
+    localStorage.removeItem("isLoggedIn");
+    window.location.href = "index.html";
+}
+
+ // Escuchar el evento de clic en el botón de cerrar sesión
+ logoutButton.addEventListener("click", function (event) {
+    event.preventDefault();
+    logout();
+});
+
+
+  
 
