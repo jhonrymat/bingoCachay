@@ -7,7 +7,6 @@ body {
 
 #background {
   padding: 10px;
-  width: 98%;
   height: 100%;
   background: #333333;
   /* Old browsers */
@@ -134,7 +133,7 @@ body {
 
 #numbersTable {
   font: bold 40px Helvetica, sans-serif;
-  width: 93.7%;
+  width: 96.7%;
   color: #FFFFFF;
   text-align: center;
   /* Fallback for older browsers */
@@ -313,4 +312,59 @@ footer {
 
 .cachay {
   color: black;
+}
+
+@media (max-width: 1064px) {
+  #background {
+    display: none;
+  }
+
+  #warning-message {
+    display: block;
+    text-align: center;
+    padding: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #f2f2f2;
+  }
+}
+#warning-message {
+  display: none;
+}
+
+#numberList {
+  width: 100%;
+  padding: 0;
+  text-align: -webkit-center;
+}
+
+.lic {
+  margin-bottom: 2px;
+  font-size: 35px;
+  background: #d9d9d9;
+  border-radius: 0.8em;
+  -moz-border-radius: 0.8em;
+  -webkit-border-radius: 0.8em;
+  color: #3d3f2b;
+  display: inline-block;
+  font-weight: bold;
+  line-height: 1.6em;
+  margin-right: 15px;
+  text-align: center;
+  width: 1.6em;
+  -webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+  box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+}
+
+#confetti-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.col{
+  background-color: blue !important;
+  margin-right: 10px !important;
 }

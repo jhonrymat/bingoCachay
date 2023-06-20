@@ -1,6 +1,7 @@
 var numberArray = new Array();
 var pickedNumberArray = new Array();
 var lock = false;
+let numberArray2 = JSON.parse(localStorage.getItem('numberArray2')) || [];
 
  // Obtener el botón de cerrar sesión
  var logoutButton = document.getElementById("logoutButton");
@@ -64,16 +65,9 @@ function pickARandomNumber() {
             randomIndex = Math.floor(Math.random() * numberArray.length);
 
             if (numberArray.length == 0) {
-                randomNumber.html('THE&nbsp;END');
-
+                randomNumber.html('FIN');
             } else {
                 randomNumber.text('' + numberArray[randomIndex]);
-                console.log("numberArray[randomIndex] " + numberArray[randomIndex]);
-
-
-
-
-
             }
 
         }, 20);
@@ -81,8 +75,8 @@ function pickARandomNumber() {
         // Set timeout to stop random counter
         setTimeout(function () {
             speakLetterWithNumber(numberArray[randomIndex]);
-
-            console.log("numberArray[randomIndex22] " + numberArray[randomIndex]);
+            addNumberToArray(numberArray[randomIndex]);
+            console.log("numberArray[randomIndex22] 2 " + numberArray[randomIndex]);
             clearInterval(animationTimer)
             updateArrays(randomIndex);
             lock = false;
@@ -136,7 +130,10 @@ function speakLetterWithNumber(number) {
 function glowNumbers() {
     for (var i = 0; i < pickedNumberArray.length; i++) {
         var cell = document.getElementById("cell" + pickedNumberArray[i]);
-        cell.className = cell.className + " glowingText";
+        if (cell) {
+            cell.className = cell.className + " glowingText";
+          }
+        // cell.className = cell.className + " glowingText";
     }
 }
 
@@ -149,9 +146,10 @@ function updateArrays(pickedIndex) {
 
 
 function askForRestart() {
-    if (confirm('Do you want to really restart the game?')) {
+    if (confirm('¿Quieres realmente reiniciar el juego?')) {
         localStorage.clear();
         location.reload();
+        clearArray();
     }
 }
 
@@ -169,4 +167,34 @@ function logout() {
 
 
   
+function addNumberToArray(number) {
+    if (typeof number === 'number' && !isNaN(number)) {
+      numberArray2.push(number);
+      if (numberArray2.length > 5) {
+        numberArray2.shift();
+      }
+      // Guardar el array en localStorage después de cada modificación
+      localStorage.setItem('numberArray2', JSON.stringify(numberArray2));
+    showNumbers();
+    }
+  }
+  
+  function showNumbers() {
+    const numberList = document.getElementById('numberList');
+    numberList.innerHTML = '';
+  
+    for (let i = numberArray2.length - 1; i >= 0; i--) {
+      const listItem = document.createElement('li');
+      listItem.classList.add('lic');
+      listItem.textContent = numberArray2[i];
+      numberList.appendChild(listItem);
+    }
+  }
 
+// Función para vaciar el array
+function clearArray() {
+    numberArray2 = [];
+    // Limpiar el almacenamiento local también
+    localStorage.removeItem('numberArray2');
+    showNumbers();
+  }

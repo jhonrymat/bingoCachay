@@ -26,6 +26,7 @@
             <h2 class="nombre-empresa">Cachay</h2>
         </div>
         <nav>
+            <a href="#" onclick="toggleConfetti();" class="size nav-link col">Tenemos Ganador</a>
             <a href="#" class="size nav-link" onclick="askForRestart()"><span>Crear nuevo juego</span></a>
             <a href="#" id="logoutButton" class="nav-link">Cerrar sesión</a>
         </nav>
@@ -54,12 +55,15 @@
                                         <option value="20">20 seg</option>
                                         <option value="25">25 seg</option>
                                         <!-- Agrega las opciones de 5 en 5 hasta 100 según tus necesidades -->
-                                      </select>
+                                    </select>
                                 </div>
                             </td>
                         </tr>
                     </table>
 
+                </td>
+                <td style="width: 10%;">
+                    <ul id="numberList"></ul>
                 </td>
                 <td>
                     <div class="randomNumberClass" id="randomNumber">--</div>
@@ -92,6 +96,11 @@
         </div>
 
     </div>
+    <div id="warning-message">
+        <p>
+            Esta aplicación solo funciona en computadoras. Por favor, comuníquese con su desarrollador.
+        </p>
+    </div>
 
     <footer>
         <div class="footer-column">
@@ -109,4 +118,7 @@
 </body>
 <script src="scripts/script.js"></script>
 <script src="scripts/automatico.js"></script>
+<script src="scripts/confetti.js"></script>
+
+
 </html>
