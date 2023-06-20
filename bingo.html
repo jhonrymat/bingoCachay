@@ -14,13 +14,23 @@
             }
         });
     </script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 
 </head>
 
 <body onload="init()">
-    <button id="logoutButton">Cerrar Sesión</button>
+    <header>
+        <div class="logo">
+            <img src="img/bingo.png" alt="logo bingo">
+            <h2 class="nombre-empresa">Cachay</h2>
+        </div>
+        <nav>
+            <a href="#" class="size nav-link" onclick="askForRestart()"><span>Crear nuevo juego</span></a>
+            <a href="#" id="logoutButton" class="nav-link">Cerrar sesión</a>
+        </nav>
+
+    </header>
     <div id="background">
         <table id="topTable">
             <tr>
@@ -29,7 +39,7 @@
                         <tr>
                             <td>
                                 <div>
-                                    <span class="button" onclick="pickARandomNumber()">INICIAR</span>
+                                    <button class="button" id="iniciar" onclick="pickARandomNumber()">INICIAR</button>
                                 </div>
                             </td>
                         </tr>
@@ -37,7 +47,14 @@
                             <td>
                                 <p></br></p>
                                 <div>
-                                    <span class="button_restart" onclick="askForRestart()">Crear nuevo juego</span>
+                                    <a id="automatico" class="button_restart">Automatico</a>
+                                    <select id="selectTiempo" class="sel">
+                                        <option value="10">10 seg</option>
+                                        <option value="15">15 seg</option>
+                                        <option value="20">20 seg</option>
+                                        <option value="25">25 seg</option>
+                                        <!-- Agrega las opciones de 5 en 5 hasta 100 según tus necesidades -->
+                                      </select>
                                 </div>
                             </td>
                         </tr>
@@ -76,8 +93,20 @@
 
     </div>
 
+    <footer>
+        <div class="footer-column">
+            <div class="logo-column">
+                <img src="img/bingo.png" alt="Logo de Bingo">
+                <h2 class="cachay">Cachay</h2>
+            </div>
+            <div class="rights-column">
+                <p>&copy;Copyright <span id="year">2023-2027</span> Derechos reservados. Creado por <a target="_blank"
+                        href="https://jhonrymat.github.io/guiargo/" class="guiargo">Guiargo</a></p>
+            </div>
+        </div>
+    </footer>
+
 </body>
-<script src="script.js"></script>
-
-
+<script src="scripts/script.js"></script>
+<script src="scripts/automatico.js"></script>
 </html>

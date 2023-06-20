@@ -103,7 +103,7 @@ body {
 }
 
 .button_restart:hover {
-  background-image: -webkit-linear-gradient(top, rgba(230, 23, 23, 1) 0%, rgba(199, 16, 16, 1) 100%);
+  background-image: -webkit-linear-gradient(top, rgba(210, 23, 23, 1) 0%, rgba(199, 16, 16, 1) 100%);
   background-image: -moz-linear-gradient(top, rgba(230, 23, 23, 1) 0%, rgba(199, 16, 16, 1) 100%);
   background-image: -ms-linear-gradient(top, rgba(230, 23, 23, 1) 0%, rgba(199, 16, 16, 1) 100%);
   background-image: -o-linear-gradient(top, rgba(230, 23, 23, 1) 0%, rgba(199, 16, 16, 1) 100%);
@@ -117,7 +117,20 @@ body {
   text-shadow: 0px 1px 1px rgba(0, 0, 0, 1)
 }
 
-.button_restart:active {}
+.button_restart.active {
+  background-image: -webkit-linear-gradient(top, rgba(0,255,0,1) 0%, rgba(0,255,0,0.6) 100%);
+  background-image: -moz-linear-gradient(top, rgba(0,255,0,1) 0%, rgba(0,255,0,0.6) 100%);
+  background-image: -ms-linear-gradient(top, rgba(0,255,0,1) 0%, rgba(0,255,0,0.6) 100%);
+  background-image: -o-linear-gradient(top, rgba(0,255,0,1) 0%, rgba(0,255,0,0.6) 100%);
+  background-image: linear-gradient(top, rgba(0,255,0,1) 0%, rgba(0,255,0,0.6) 100%);
+  -webkit-box-shadow: 0px 2px 0px 0px rgba(0,255,0,0.2);
+  -moz-box-shadow: 0px 2px 0px 0px rgba(0,255,0,0.2);
+  box-shadow: 0px 2px 0px 0px rgba(0,255,0,0.2);
+}
+
+.sel{  
+  font-size: 18px;
+}
 
 #numbersTable {
   font: bold 40px Helvetica, sans-serif;
@@ -181,4 +194,123 @@ table {
   text-shadow: 0 0 10px #FF9D00;
   font-size: 40px;
   color: #FF9D00;
+}
+
+/* estilos incorporados por mi */
+header {
+  display: flex;
+  min-height: 80px;
+  height: 50px;
+  padding: 10px;
+  background-color: #ffb030;
+  align-items: center;
+  justify-content: space-between;
+}
+#logoutButton{
+  font-size: 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 50px;
+  margin-right: 10px;
+}
+
+.logo h2 {
+  font-size: 31px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+
+}
+
+nav a {
+  padding: 20px 20px;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center
+}
+
+nav a:hover {
+  color: aliceblue;
+}
+.size{
+  display: inline-block;
+  background-color: #4CAF50;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  line-height: 1;
+}
+
+.size span {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.size:hover {
+  background-color: #45a049;
+}
+
+footer {
+  background: linear-gradient(to right, #cfcfcf, #333333);
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+.footer-column {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-column {
+  display: flex;
+  align-items: center;
+}
+
+.logo-column,
+.rights-column {
+  flex-basis: 50%;
+}
+
+.logo-column img {
+  max-width: 200px;
+}
+
+.logo-column h2 {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.rights-column p {
+  font-size: 14px;
+}
+
+.guiargo {
+  color: aqua;
+}
+
+.cachay {
+  color: black;
 }
